@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializer import CategorySerializer
 
 
-class CreateCategory(generics.ListCreateAPIView):
+class CategoryView(generics.ListCreateAPIView):
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated]
 
