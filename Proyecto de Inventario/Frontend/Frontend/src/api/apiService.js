@@ -1,7 +1,11 @@
 import axios from 'axios'
 import {ACCESS_TOKEN} from './constantes'
 import {REFRESH_TOKEN} from './constantes'
+import { useNavigate } from 'react-router-dom'
 
+export const logout = (navigate) => {
+    navigate('/logout'); // Redirige al login
+};
 
 const apiServices = axios.create({
     baseURL: 'http://127.0.0.1:8000/',
