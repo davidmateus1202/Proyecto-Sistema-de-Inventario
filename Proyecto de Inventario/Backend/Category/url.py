@@ -1,12 +1,11 @@
-from django.urls import path, include
-from .views import CategoryView, CategoryViewset
-from rest_framework import routers
+from django.urls import path
+from .views import CategoryView, CategoryDelete, CategoryUpdate
 
-router = routers.DefaultRouter()
-router.register(r"Category", CategoryViewset, "Category")
+
 
 urlpatterns = [
 
     path('category/', CategoryView.as_view(), name='create_category'),
-    path('cat/', include(router.urls)),
+    path('delete/<int:pk>/', CategoryDelete.as_view(), name='delete_category'),
+    path('update/<int:pk>/', CategoryUpdate.as_view(), name='update_category'),
 ]

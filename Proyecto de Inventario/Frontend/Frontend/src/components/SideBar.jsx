@@ -15,34 +15,21 @@ function SideBar() {
             <img onClick={() => setOpen(!open)}
             
             src="./src/assets/control.png"
-                className={`absolute cursor-pointer right-2 top-28 w-7   ${!open && 'transform rotate-180'}`}
+                className={`absolute cursor-pointer right-2 top-28 w-7  ${!open && 'transform rotate-180'}`}
             />
-            <div className={`flex mb-16 px-4 ${open === true && 'bg-[#413ec4]'} py-3 rounded-md items-center content-center`}>
+            <div className={`flex mb-16 px-4 ${open === true && 'bg-[#413ec4]'} py-3 rounded-md items-center content-center `}>
             <FaHome className="text-white"/>
             <h1 className={`${!open && 'scale-0'} text-white font-semibold ml-2`}>EasyManager</h1>
 
             </div>
 
-            <ItemSideBar open={open} text="Home" route="/"/>
+            <ItemSideBar open={open} text="Home" route="/" icon='./src/assets/home (2).png'/>
 
-            <ItemSideBar open={open} text="Categorias" route="/category"/>
+            <ItemSideBar open={open} text="Categorias" route="/category" icon='./src/assets/Folder.png'/>
+
+            <ItemSideBar open={open} text='Productos' route='/productos' icon='./src/assets/Chart_fill.png'/>
  
 
-
-
-
-            <div onClick={() => navigate('/category')}
-            className={`flex gap-x-6 items-center mt-5 ml-2 ${open === true && 'hover:bg-[#413ec4]  rounded-md cursor-pointer' }`}>
-            <img className={`${!open && 'bg-[#0b2446] py-1 px-1 rounded-md hover:bg-[#0d437f] cursor-pointer'}`} src="./src/assets/Folder.png"/>
-            <h1 className={`origin-left duration-300 font-medium text-white text-md ${!open && 'scale-0'} cursor-pointer`}>Cateogria</h1>
-            
-            </div>
-            <div onClick={() => navigate('/category')}
-            className={`flex gap-x-6 items-center mt-5 ml-2 ${open === true && 'hover:bg-[#413ec4]  rounded-md cursor-pointer' }`}>
-            <img className={`${!open && 'bg-[#0b2446] py-1 px-1 rounded-md hover:bg-[#0d437f] cursor-pointer'}`} src="./src/assets/Folder.png"/>
-            <h1 className={`origin-left duration-300 font-medium text-white text-md ${!open && 'scale-0'} cursor-pointer`}>Cateogria</h1>
-            
-            </div>
             <hr className="mt-4"/>
 
 

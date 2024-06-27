@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     # local apps
     "user_app",
     "Category",
+    "Productos",
 ]
 
 MIDDLEWARE = [
@@ -158,3 +159,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:9000",
     "http://localhost:5173"
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -8,4 +8,4 @@ class Category(models.Model):
 
 
     def __str__(self) -> str:
-        return f'{self.name_category}'
+        return f'Usuario: {self.user} | {self.name_category}'

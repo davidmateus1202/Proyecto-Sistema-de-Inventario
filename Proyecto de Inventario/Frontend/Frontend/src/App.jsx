@@ -8,6 +8,7 @@ import { CategoryPage } from './pages/CategoryPage'
 import { Login } from './pages/Login'
 import { Home } from './pages/Home'
 import { Error404 } from './pages/Error404'
+import Productos from './pages/Productos'
 
 
 function Logout() {
@@ -32,6 +33,7 @@ function App() {
           <Route path='*' element={<Error404 />} />
           <Route path='/logout' element={<Logout />} />
           <Route path='/category' element={<ProtectRouter><CategoryPage /></ProtectRouter>} />
+          <Route path='/productos' element={<ProtectRouter><Productos /></ProtectRouter>} />
         </Routes>
 
 

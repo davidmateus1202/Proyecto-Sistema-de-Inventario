@@ -18,7 +18,7 @@ export function Login() {
       if(response.status === 200 || response.status === 201) {
         localStorage.setItem(ACCESS_TOKEN, response.data.access)
         localStorage.setItem(REFRESH_TOKEN, response.data.refresh)
-        toast.success('Successfully toasted!')
+        toast.success('Hola de nuevo!')
         navigate('/')
       }else{
         toast.error('Datos incorrectos')

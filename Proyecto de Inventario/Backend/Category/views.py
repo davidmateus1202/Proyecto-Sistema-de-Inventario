@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import Category
-from rest_framework import generics, viewsets
+from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .serializer import CategorySerializer
 
@@ -20,7 +20,22 @@ class CategoryView(generics.ListCreateAPIView):
         else:
             return serializer.errors
         
+# Create your views for delete
 
-class CategoryViewset(viewsets.ModelViewSet):
+class CategoryDelete(generics.DestroyAPIView):
     serializer_class = CategorySerializer
-    queryset = Category.objects.all()
+    permission_classes = [IsAuthenticated]
+
+
+    def get_queryset(self):
+        user = self.request.user
+        return Category.objects.filter(user=user)   
+
+
+class CategoryUpdate(generics.UpdateAPIView):
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Category.objects.filter(user=user)
