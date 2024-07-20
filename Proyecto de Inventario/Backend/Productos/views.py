@@ -21,5 +21,4 @@ class ProductosView(generics.ListCreateAPIView):
         else:
             return serializer.errors
 
-
         

@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Register } from './pages/Register'
 import { ProtectRouter } from './components/ProtectRouter'
 import { Toaster } from 'react-hot-toast'
-import { CategoryPage } from './pages/CategoryPage' 
+import { CategoryPage } from './pages/CategoryPage'
+import Clientes from './pages/Clientes'
 
 
 import { Login } from './pages/Login'
@@ -13,7 +14,7 @@ import Productos from './pages/Productos'
 
 function Logout() {
   localStorage.clear()
-  return <Navigate to="/login" />
+  return <Navigate to="/" />
 }
 
 function RegisterAndLogout() {
@@ -27,13 +28,14 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<Login />} />
           <Route path='/register' element={<Register />} />
-          <Route path='/' element={<ProtectRouter> <Home /> </ProtectRouter>} />
+          <Route path='/home' element={<ProtectRouter> <Home /> </ProtectRouter>} />
           <Route path='*' element={<Error404 />} />
           <Route path='/logout' element={<Logout />} />
           <Route path='/category' element={<ProtectRouter><CategoryPage /></ProtectRouter>} />
           <Route path='/productos' element={<ProtectRouter><Productos /></ProtectRouter>} />
+          <Route path='/clientes' element={<ProtectRouter><Clientes /></ProtectRouter>} />
         </Routes>
 
 

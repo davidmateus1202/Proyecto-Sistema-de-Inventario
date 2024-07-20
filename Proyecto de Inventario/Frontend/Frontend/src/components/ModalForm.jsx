@@ -32,14 +32,15 @@ function ModalForm({ setOpen, setCategories, method, category }) {
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-      <form onSubmit={onSubmit} className="flex flex-col bg-white gap-5 py-16 px-10 md:px-48 md:py-24">
+      <form onSubmit={onSubmit} className="flex flex-col bg-white gap-5 py-16 px-10 ">
+        <button onClick={() => setOpen(false)} className="ml-auto justify-start bg-primary py-2 px-4 rounded-full text-white font-semibold">x</button>
         <h1 className="font-bold text-xs md:text-xl text-primary">
           {method === 'register' ? 'Registra tu categoria' : 'Actualiza tu categoria'}
         </h1>
         <label htmlFor="name_category" className="relative block rounded-md border border-gray-200 shadow-sm focus-within:border-blue-600 focus-within:ring-1 focus-within:ring-blue-600">
           <input
             type="text"
-            className="peer border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 py-2 ml-2 font-light"
+            className="md:w-[400px] border-none bg-transparent placeholder-transparent focus:border-transparent focus:outline-none focus:ring-0 py-2 ml-2 font-light"
             {...register("name_category", {
               required: {
                 value: true,

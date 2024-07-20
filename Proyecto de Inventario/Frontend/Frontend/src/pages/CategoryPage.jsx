@@ -57,7 +57,7 @@ export function CategoryPage() {
     }
   };
 
-  return (
+  return ( 
     <div className="flex">
       <SideBar />
       <div className="flex flex-col w-full h-full">

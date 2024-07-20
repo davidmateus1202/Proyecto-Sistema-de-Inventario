@@ -68,6 +68,6 @@ export function ProtectRouter({children}) {
     }
     // If the user is authenticated, we return the children
 
-    return isAuthenticated ? children : <Navigate to='/login' />
+    return isAuthenticated ? children : <Navigate to='/' />
 
 }

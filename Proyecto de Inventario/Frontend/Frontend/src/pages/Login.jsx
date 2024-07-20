@@ -19,7 +19,7 @@ export function Login() {
         localStorage.setItem(ACCESS_TOKEN, response.data.access)
         localStorage.setItem(REFRESH_TOKEN, response.data.refresh)
         toast.success('Hola de nuevo!')
-        navigate('/')
+        navigate('/home')
       }else{
         toast.error('Datos incorrectos')
       }

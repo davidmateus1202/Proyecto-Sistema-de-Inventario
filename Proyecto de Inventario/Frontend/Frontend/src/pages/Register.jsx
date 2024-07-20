@@ -19,7 +19,7 @@ export function Register() {
       const response = await apiServices.post('api/user/register/', { username, password })
       if (response.status === 200 || response.status === 201) {
         toast.success('El usuario se ha creado correctamente')
-        navigate('/login')
+        navigate('/')
       } else {
         toast.error('Error')
       }

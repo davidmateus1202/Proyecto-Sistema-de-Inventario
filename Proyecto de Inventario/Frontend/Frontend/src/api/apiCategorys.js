@@ -22,7 +22,6 @@ export const createCategory = async (data, setCategory, navigate) => {
         const response = await apiServices.post('category/category/', { name_category: data.name_category });
         if (response.status === 200 || response.status === 201) {
             toast.success('Categoría creada correctamente');
-            getCategory(setCategory, navigate); // Vuelve a cargar las categorías
         } else if (response.status === 401) {
             logout(navigate);
         } else {

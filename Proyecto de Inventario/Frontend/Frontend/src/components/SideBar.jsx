@@ -23,7 +23,7 @@ function SideBar() {
 
             </div>
 
-            <ItemSideBar open={open} text="Home" route="/" icon='./src/assets/home (2).png'/>
+            <ItemSideBar open={open} text="Home" route="/home" icon='./src/assets/home (2).png'/>
 
             <ItemSideBar open={open} text="Categorias" route="/category" icon='./src/assets/Folder.png'/>
 
@@ -31,6 +31,7 @@ function SideBar() {
  
 
             <hr className="mt-4"/>
+            <ItemSideBar open={open} text={'Clientes'} route='/clientes' icon='./src/assets/user.png' />
 
 
             
