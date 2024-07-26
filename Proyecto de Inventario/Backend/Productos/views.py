@@ -21,4 +21,13 @@ class ProductosView(generics.ListCreateAPIView):
         else:
             return serializer.errors
 
-        
+
+class ProductosUpdate(generics.UpdateAPIView):
+    serializer_class = ProductosSerializer
+    permission_classes = [IsAuthenticated]
+
+
+    def get_queryset(self):
+        user = self.request.user
+        return Producto.objects.filter(user=user)
+    

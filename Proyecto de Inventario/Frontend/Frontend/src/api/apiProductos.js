@@ -48,3 +48,33 @@ export const createProducto = async (data, category, image) => {
         console.log(error.response.data)
     }
 }
+
+export const updateProducto = async (data, producto,) => {
+    try {
+        const formData = new FormData();
+        formData.append('categoria', producto.categoria);
+        formData.append('codigo', data.codigo);
+        formData.append('nombre', data.nombre);
+        formData.append('unidades', data.unidades);
+        formData.append('precio', data.precio);
+
+        const response = await apiServices.put(`product/update/producto/${producto.id}/`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        })
+
+        if(response.status === 200 || response.status === 201){
+            toast.success('Producto actualizado correctamente')
+            console.log(response)
+        }else{
+            toast.error('Error al actualizar el producto')
+            console.log(response)
+        }
+
+    }catch (e){
+        console.log(e)
+        toast.error('Error al actualizar el producto')
+    }
+
+}

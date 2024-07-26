@@ -9,6 +9,7 @@ import { FaBoxOpen } from "react-icons/fa";
 import { AiFillProduct } from "react-icons/ai";
 import Dropdown from "../components/Dropdown"
 import { VscDebugRestart } from "react-icons/vsc";
+import Notfound from "../components/Notfound"
 
 
 
@@ -20,6 +21,9 @@ function Productos() {
   const [search, setSearch] = useState('');
   const [filteredProductos, setFilteredProductos] = useState([]);
   const [filterCategory, setfilterCategory] = useState(null);
+  const [method, setMethod] = useState('');
+  const [selectProduct, setSelectProduct] = useState(null);
+  
 
   useEffect(() => {
     getProducto((data) => {
@@ -42,6 +46,12 @@ function Productos() {
   const handleChange = (e) => {
     setSearch(e.target.value);
     filtrar(e.target.value);
+  }
+
+  const handleEdit = (producto) => {
+    setSelectProduct(producto);
+    setMethod('update');
+    setOpen(true);
   }
 
 
@@ -72,7 +82,7 @@ function Productos() {
     <div className="flex">
       <SideBar />
       <div className="flex flex-col w-full h-screen">
-        <HeaderProductos setOpen={setOpen} />
+        <HeaderProductos setOpen={setOpen} setmethod={setMethod} />
 
         <div className="flex bg-primary m-2 rounded-t-lg items-center">
           <AiFillProduct className="text-[#d3e2f2] ml-2" />
@@ -95,36 +105,52 @@ function Productos() {
             }} />
         </div>
 
-
-        <div className="flex-grow p-2 overflow-y-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 overflow-y-auto bg-gray-50 rounded-md py-2 px-2">
-            {
-              productos.map((productos, index) => (
-                <div key={index} className="block rounded-md p-4 shadow-md bg-white">
-                  <img src={productos.image} className="w-full h-52 object-cover rounded-md mb-7" />
-                  <span className="text-gray-400">{formatCurrency(productos.precio)}</span>
-                  <h3 className="font-semibold text-slate-500">{productos.nombre}</h3>
-                  <div className="flex items-center">
-                    <FaBoxOpen className="text-xl text-primary" />
-                    <span className="text-primary font-bold px-2 text-xs xl:text-sm">Unidades Disponibles:</span>
-                    <span className="font-semibold text-slate-400 text-xs xl:text-sm">{productos.unidades}</span>
+        {
+          productos.length === 0 ? <Notfound/>
+          : 
+          (
+            <div className="flex-grow p-2 overflow-y-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 overflow-y-auto bg-gray-50 rounded-md py-2 px-2">
+              {
+  
+                productos.map((productos, index) => (
+                  <div key={index} className="block rounded-md p-4 shadow-md bg-white">
+                    <img src={productos.image} className="w-full h-52 object-cover rounded-md mb-7" />
+                    <span className="text-gray-400">{formatCurrency(productos.precio)}</span>
+                    <h3 className="font-semibold text-slate-500">{productos.nombre}</h3>
+                    <div className="flex items-center">
+                      <FaBoxOpen className="text-xl text-primary" />
+                      <span className="text-primary font-bold px-2 text-xs xl:text-sm">Unidades Disponibles:</span>
+                      <span className="font-semibold text-slate-400 text-xs xl:text-sm">{productos.unidades}</span>
+                    </div>
+  
+                    <h3 className="w-full text-center border border-primary rounded-md mt-3 py-1 font-semibold text-xs md:text-sm ">Categoria: {productos.categoria_nombre}</h3>
+                    <button onClick={() => {
+                      handleEdit(productos)
+                    }}
+                    className="bg-primary text-white py-2 px-2 rounded-md shadow-md font-semibold mt-2 w-full"
+                    >Actualizar</button>
+  
+  
                   </div>
-
-                  <h3 className="w-full text-center border border-primary rounded-md mt-3 py-1 font-semibold text-xs md:text-sm ">Categoria: {productos.categoria_nombre}</h3>
-
-
-                </div>
-
-              ))
-            }
-
-
+  
+                ))
+              }
+  
+  
+  
+  
+            </div>
           </div>
-        </div>
+  
+          )
+        }
 
 
 
-        {open && <ModalFormProductos setOpen={setOpen} />}
+
+
+        {open && <ModalFormProductos setOpen={setOpen} method={method} product={selectProduct}/>}
 
       </div>
 

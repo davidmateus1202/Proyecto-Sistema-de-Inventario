@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
 import { IoSearchOutline } from "react-icons/io5";
+import Notfound from "../components/Notfound";
 
 export function CategoryPage() {
 
@@ -18,12 +19,13 @@ export function CategoryPage() {
   const [search, setSearch] = useState('');
   const [filteredCategories, setFilteredCategories] = useState([]);
   const navigate = useNavigate();
+  const isDesktop = window.innerWidth > 1024;
 
   useEffect(() => {
     getCategory((data) => {
       setCategories(data);
       setFilteredCategories(data);
-    
+
     }, navigate)
   }, [navigate]);
 
@@ -50,14 +52,67 @@ export function CategoryPage() {
     if (busqueda === '') {
       setCategories(filteredCategories);
     } else {
-      const resultados = filteredCategories.filter((category) => 
+      const resultados = filteredCategories.filter((category) =>
         category.name_category.toString().toLowerCase().includes(busqueda.toLowerCase())
       );
       setCategories(resultados);
     }
   };
 
-  return ( 
+  const renderTable = () => {
+    return (
+      <table className="table-auto border-collapse w-full text-sm shadow-xl">
+        <thead>
+          <tr>
+            <th className="border-b  font-medium p-4 pl-8 pt-3 pb-3 text-slate-400 dark:text-slate-200 text-center bg-slate-200">#</th>
+            <th className="border-b  font-medium p-4 pl-8 pt-3 pb-3 text-slate-400 dark:text-slate-200 text-center bg-slate-200">Nombre de Categoria</th>
+            <th className="border-b  font-medium p-4 pl-8 pt-3 pb-3 text-slate-400 dark:text-slate-200 text-left bg-slate-200">Acciones</th>
+          </tr>
+        </thead>
+        <tbody className="bg-white dark:bg-slate-800 text-center items-center">
+          {categories.map((category, index) => (
+            <tr key={index}>
+              <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400 font-semibold ">{index + 1}</td>
+              <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-16 text-slate-500 dark:text-slate-400 text-md">{category.name_category}</td>
+              <td className="flex border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                <div onClick={() => handleDelete(category.id)} className="bg-red-600 py-2 px-2 shadow-md rounded-md cursor-pointer">
+                  <MdDelete className="text-xl text-white" />
+                </div>
+                <div onClick={() => handleEdit(category)} className="bg-primary py-2 px-2 shadow-md rounded-md cursor-pointer ml-8">
+                  <CiEdit className="text-xl text-white" />
+                </div>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )
+
+  }
+
+  const renderPhone = () => {
+    return (
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {
+        categories.map((category) => (
+          <div key={category.id_category} className="bg-white p-2 rounded-md shadow-md">
+            <div className="flex justify-between items-center">
+              <h1 className="font-semibold">{category.name_category}</h1>
+              <div className="flex items-center">
+                <CiEdit className="text-primary cursor-pointer" onClick={() => handleEdit(category)} />
+                <MdDelete className="text-red-500 cursor-pointer" onClick={() => handleDelete(category.id_category)} />
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    )
+  }
+
+  return (
     <div className="flex">
       <SideBar />
       <div className="flex flex-col w-full h-full">
@@ -69,7 +124,7 @@ export function CategoryPage() {
           </div>
           <div className="flex justify-end mr-2 items-center ">
             <div className="bg-primary pt-3  mb-3 px-2 rounded-s-md">
-            <IoSearchOutline className="text-white dark:text-slate-200 text-2xl mb-2" />
+              <IoSearchOutline className="text-white dark:text-slate-200 text-2xl mb-2" />
             </div>
 
             <input type="text"
@@ -77,36 +132,23 @@ export function CategoryPage() {
               placeholder="Buscar categoria"
               value={search}
               onChange={handleChange}
-                 
+
             />
-            
+
           </div>
-          <div className="overflow-y-auto max-h-96 px-2">
-            <table className="table-auto border-collapse w-full text-sm shadow-xl">
-              <thead>
-                <tr>
-                  <th className="border-b  font-medium p-4 pl-8 pt-3 pb-3 text-slate-400 dark:text-slate-200 text-center bg-slate-200">#</th>
-                  <th className="border-b  font-medium p-4 pl-8 pt-3 pb-3 text-slate-400 dark:text-slate-200 text-center bg-slate-200">Nombre de Categoria</th>
-                  <th className="border-b  font-medium p-4 pl-8 pt-3 pb-3 text-slate-400 dark:text-slate-200 text-left bg-slate-200">Acciones</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white dark:bg-slate-800 text-center items-center">
-                {categories.map((category, index) => (
-                  <tr key={index}>
-                    <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400 font-semibold ">{index + 1}</td>
-                    <td className="border-b border-slate-100 dark:border-slate-700 p-4 pl-16 text-slate-500 dark:text-slate-400 text-md">{category.name_category}</td>
-                    <td className="flex border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                      <div onClick={() => handleDelete(category.id)} className="bg-red-600 py-2 px-2 shadow-md rounded-md cursor-pointer">
-                        <MdDelete className="text-xl text-white" />
-                      </div>
-                      <div onClick={() => handleEdit(category)} className="bg-primary py-2 px-2 shadow-md rounded-md cursor-pointer ml-8">
-                        <CiEdit className="text-xl text-white" />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className= 'overflow-y-auto max-h-96 px-2'>
+            {
+              categories.length === 0 ? <div className="h-screen">
+                <Notfound />
+              </div>
+                :
+                (
+
+                  isDesktop ? renderTable() : renderPhone()
+
+                )
+
+            }
           </div>
         </div>
         {open && <ModalForm setOpen={setOpen} setCategories={setCategories} method={method} category={selectedCategory} />}
@@ -114,3 +156,4 @@ export function CategoryPage() {
     </div>
   );
 }
+

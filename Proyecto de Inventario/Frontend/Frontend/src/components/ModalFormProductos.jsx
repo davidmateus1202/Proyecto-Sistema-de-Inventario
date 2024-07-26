@@ -3,30 +3,48 @@ import { useForm } from 'react-hook-form';
 import { getCategory } from '../api/apiCategorys';
 import { useNavigate } from 'react-router-dom';
 import UploadFile from '../components/uploadFile';
-import { createProducto } from '../api/apiProductos';
+import { createProducto, updateProducto } from '../api/apiProductos';
 import toast from 'react-hot-toast';
 
-function ModalFormProductos({ setOpen }) {
+function ModalFormProductos({ setOpen, method, product }) {
   const [category, setCategory] = useState([]);
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [file, setFile] = useState(null);
+  const { register, handleSubmit, setValue,formState: { errors } } = useForm();
+  const isDesktop = window.innerWidth > 824;
 
   useEffect(() => {
+    console.log(product);
     getCategory(setCategory, navigate);
-  }, []);
 
-  const { register, handleSubmit, formState: { errors } } = useForm();
+    if(method === 'update'){
+      setValue('nombre', product.nombre);
+      setValue('unidades', product.unidades);
+      setValue('precio', product.precio);
+      setValue('codigo', product.codigo);
 
-  const onSubmit = handleSubmit(async (data) => {
-    if (!selectedCategory) {
-      toast.error('Debes seleccionar una categoría');
-      return;
     }
+  }, [method, product, setValue]);
+
+  
+  const onSubmit = handleSubmit(async (data) => {
+
 
     try {
-      await createProducto(data, selectedCategory.id, file);
+      if (method === 'register') {
+        if (!selectedCategory) {
+          toast.error('Debes seleccionar una categoría');
+          return;
+        }else {
+          await createProducto(data, selectedCategory.id, file);
+
+        }
+        
+      } else {
+        await updateProducto(data, product);
+      }
       window.location.reload();
       setOpen(false);
     } catch (error) {
@@ -41,17 +59,27 @@ function ModalFormProductos({ setOpen }) {
 
   return (
     <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
-      <form onSubmit={onSubmit} className="flex flex-col overflow-y-auto bg-white gap-5 py-16 px-10 md:px-30">
+      <form onSubmit={onSubmit} className="flex flex-col overflow-y-auto bg-white gap-5 w-[500px] rounded-t-lg">
+        <div className='relative'>
+        {
+          method === 'register' ? <></> : (
+            <img src={product.image} className='w-full h-52 object-cover rounded-md mb-7'/>
+          )
+        }
         <button onClick={() => setOpen(false)}
-        className='ml-auto justify-start bg-primary py-2 px-4 rounded-full text-white font-semibold'>x</button>
+        className='absolute top-2 right-2 bg-primary py-2 px-4 text-white font-semibold rounded-full'>x
+        </button>
+        </div>
+
+        <div className='flex flex-col gap-5 m-10 '>
         <h1 className='text-2xl text-primary font-bold gap-3'>
-          Agrega un producto
+          {method === 'register' ? 'Registra tu producto' : 'Actualiza tu producto'}
         </h1>
         <div className='flex '>
           <div className='flex flex-col'>
             <input type="text"
-              className='border border-gray-300 p-2 rounded-md shadow-md'
-              placeholder='Nombre del producto'
+              className={`border border-gray-300 p-2 rounded-md shadow-md ${ isDesktop ? '' : 'w-[200px]' }`}
+              placeholder='Nombre'
               {...register('nombre', {
                 required: {
                   value: true,
@@ -64,8 +92,8 @@ function ModalFormProductos({ setOpen }) {
           
           <div className='flex flex-col'>
             <input type="number"
-              className='border border-gray-300 p-2 rounded-md shadow-md ml-2'
-              placeholder='Cantidad'
+              className={`border border-gray-300 p-2 rounded-md shadow-md ml-2 ${ isDesktop ? '' : 'w-[100px]' }`}
+              placeholder='Unidades'
               {...register('unidades', {
                 required: {
                   value: true,
@@ -90,24 +118,30 @@ function ModalFormProductos({ setOpen }) {
         />
         {errors.precio && <span className="text-red-500 text-xs">{errors.precio.message}</span>}
 
-        <div className={`h-auto  relative flex-col items-center w-full`}>
-          <button className='w-full border border-white p-2 rounded-md shadow-md font-bold text-white bg-primary'
-            onClick={toggleDropdown}>
-            {selectedCategory ? selectedCategory.name_category : 'Selecciona una categoría'}
-          </button>
-          {dropdownOpen && (
-            <div className="absolute bg-white border mt-1 rounded shadow-lg w-full max-h-40 overflow-y-auto">
-              {category.map((cat) => (
-                <div onClick={() => { setSelectedCategory(cat); setDropdownOpen(false); }}
-                  key={cat.id} className="p-2 hover:bg-gray-200 cursor-pointer">{cat.name_category}</div>
-              ))}
-            </div>
-          )}
-        </div>
+        {
+          method === 'register' ? (
+            <div className={`h-auto  relative flex-col items-center w-full`}>
+            <button className='w-full border border-white p-2 rounded-md shadow-md font-bold text-white bg-primary'
+              onClick={toggleDropdown}>
+              {selectedCategory ? selectedCategory.name_category : 'Selecciona una categoría'}
+            </button>
+            {dropdownOpen && (
+              <div className="absolute bg-white border mt-1 rounded shadow-lg w-full max-h-40 overflow-y-auto">
+                {category.map((cat) => (
+                  <div onClick={() => { setSelectedCategory(cat); setDropdownOpen(false); }}
+                    key={cat.id} className="p-2 hover:bg-gray-200 cursor-pointer">{cat.name_category}</div>
+                ))}
+              </div>
+            )}
+          </div>
+          )
+          :
+          <></>
+        }
 
         <input type="number"
           className='w-full border border-gray-300 p-2 rounded-md shadow-md'
-          placeholder='Código de referencia'
+          placeholder='Código de Referencia'
           {...register('codigo', {
             required: {
               value: true,
@@ -117,10 +151,17 @@ function ModalFormProductos({ setOpen }) {
         />
         {errors.codigo && <span className="text-red-500 text-xs">{errors.codigo.message}</span>}
 
-        <UploadFile setFile={setFile} file={file} />
+        {
+          method === 'register' ? (
+            <UploadFile setFile={setFile} file={file} />
+          )
+          :
+          <></>
+        }
 
         <button className='mt-8 w-full border border-primary p-2 rounded-md shadow-md font-bold text-primary bg-white'
           type='submit'>Enviar</button>
+        </div>
       </form>
     </div>
   );

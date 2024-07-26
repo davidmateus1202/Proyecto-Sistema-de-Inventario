@@ -80,7 +80,7 @@ export function Register() {
               </p>
 
               <Link className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
-                to='/login'>Login</Link>
+                to='/'>Login</Link>
             </div>
             <button
               className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white w-full"
