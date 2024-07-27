@@ -12,6 +12,9 @@ export default {
         primary: '#34339a',
       }
     },
+    fontFamily: {
+      'sans': ['Poppins', 'sans-serif'],
+    }
   },
   plugins: [],
 }

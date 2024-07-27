@@ -20,4 +20,11 @@ class ClienteView(generics.ListCreateAPIView):
         else:
             return serializer.errors
 
+class ClienteDelete(generics.DestroyAPIView):
+    serializer_class = ClienteSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user = self.request.user
+        return Cliente.objects.filter(user=user)
 

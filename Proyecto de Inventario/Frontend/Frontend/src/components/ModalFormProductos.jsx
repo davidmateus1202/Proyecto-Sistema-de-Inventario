@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { set, useForm } from 'react-hook-form';
 import { getCategory } from '../api/apiCategorys';
 import { useNavigate } from 'react-router-dom';
 import UploadFile from '../components/uploadFile';
@@ -24,6 +24,7 @@ function ModalFormProductos({ setOpen, method, product }) {
       setValue('unidades', product.unidades);
       setValue('precio', product.precio);
       setValue('codigo', product.codigo);
+      setValue('precio_compra', product.precio_compra);
 
     }
   }, [method, product, setValue]);
@@ -104,6 +105,19 @@ function ModalFormProductos({ setOpen, method, product }) {
             {errors.unidades && <span className="text-red-500 text-xs">{errors.unidades.message}</span>}
           </div>
         </div>
+        <input type="number"
+          className='w-full border border-gray-300 p-2 rounded-md shadow-md'
+          placeholder='Precio Compra'
+          {...register('precio_compra', {
+            required: {
+              value: true,
+              message: 'Campo requerido'
+            },
+            valueAsNumber: true,
+            validate: value => !isNaN(value) || 'Solo se permiten números',
+          })}
+        />
+        {errors.precio && <span className="text-red-500 text-xs">{errors.precio.message}</span>}
         <input type="number"
           className='w-full border border-gray-300 p-2 rounded-md shadow-md'
           placeholder='Precio'

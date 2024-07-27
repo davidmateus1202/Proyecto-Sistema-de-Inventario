@@ -8,6 +8,7 @@ class Producto(models.Model):
     codigo = models.CharField(unique=True,max_length=1000)
     nombre = models.CharField(max_length=1000)
     unidades = models.IntegerField()
+    precio_compra = models.FloatField()
     precio = models.FloatField()
     image = models.ImageField(null=True, blank=True)
 

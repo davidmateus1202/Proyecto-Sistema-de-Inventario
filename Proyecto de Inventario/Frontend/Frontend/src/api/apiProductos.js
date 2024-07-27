@@ -28,6 +28,7 @@ export const createProducto = async (data, category, image) => {
         formData.append('unidades', data.unidades);
         formData.append('precio', data.precio);
         formData.append('image', image);
+        formData.append('precio_compra', data.precio_compra);
 
 
         const  response = await apiServices.post('product/product/', formData, {
@@ -57,6 +58,7 @@ export const updateProducto = async (data, producto,) => {
         formData.append('nombre', data.nombre);
         formData.append('unidades', data.unidades);
         formData.append('precio', data.precio);
+        formData.append('precio_compra', data.precio_compra);
 
         const response = await apiServices.put(`product/update/producto/${producto.id}/`, formData, {
             headers: {
