@@ -4,6 +4,7 @@ import { ProtectRouter } from './components/ProtectRouter'
 import { Toaster } from 'react-hot-toast'
 import { CategoryPage } from './pages/CategoryPage'
 import Clientes from './pages/Clientes'
+import Facturador from './pages/Facturador'
 
 
 import { Login } from './pages/Login'
@@ -36,6 +37,8 @@ function App() {
           <Route path='/category' element={<ProtectRouter><CategoryPage /></ProtectRouter>} />
           <Route path='/productos' element={<ProtectRouter><Productos /></ProtectRouter>} />
           <Route path='/clientes' element={<ProtectRouter><Clientes /></ProtectRouter>} />
+          <Route path='/factura' element={<ProtectRouter><Facturador /></ProtectRouter>} />
+
         </Routes>
 
 
