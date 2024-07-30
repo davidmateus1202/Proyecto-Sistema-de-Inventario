@@ -52,7 +52,9 @@ function Productos() {
       setProductos(filteredProductos);
     } else {
       const resultados = filteredProductos.filter((producto) =>
-        producto.nombre.toString().toLowerCase().includes(busqueda.toLowerCase())
+        producto.nombre.toString().toLowerCase().includes(busqueda.toLowerCase()) 
+        || producto.codigo.toString().includes(busqueda.toLowerCase())
+         
       );
       setProductos(resultados);
     }
