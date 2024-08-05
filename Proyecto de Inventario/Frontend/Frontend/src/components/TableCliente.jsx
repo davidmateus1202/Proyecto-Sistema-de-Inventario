@@ -2,10 +2,11 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { getClientes } from "../api/apiClientes"
 import { MdDelete } from "react-icons/md";
+import { AiOutlineSelect } from "react-icons/ai";
 
 
 
-function TableCliente({ setOpen, setSelectCliente }) {
+function TableCliente({ setOpen, setSelectCliente, method }) {
     const [clientes, setClientes] = useState([]);
     const isDesktop = window.innerWidth > 824;
     const [filteredClientes, setFilteredClientes] = useState([]);
@@ -28,7 +29,7 @@ function TableCliente({ setOpen, setSelectCliente }) {
 
     }
 
- 
+
     const handleChange = (e) => {
         const searchTerm = e.target.value;
         filtrar(searchTerm);
@@ -94,9 +95,21 @@ function TableCliente({ setOpen, setSelectCliente }) {
                                 <td className="border border-gray-300 bg-gray-200 p-2">{cliente.telefono}</td>
                                 <td className="border border-gray-300 bg-gray-200 p-2">{cliente.email}</td>
                                 <td className="border border-gray-300 bg-gray-200">
-                                    <button>
-                                        <MdDelete onClick={() => handleDelete(cliente)} className="text-2xl text-red-600" />
-                                    </button>
+                                    {
+                                        method === 'select' ? (
+                                            <button onClick={() => {
+                                                setSelectCliente(cliente);
+                                                setOpen(false);
+                                            }}
+                                             className="bg-white mt-1 rounded-md shadow-md">
+                                                {<AiOutlineSelect className="text-xl mx-2 my-2" />}
+                                            </button>
+                                        ) : (
+                                            <button>
+                                                <MdDelete onClick={() => handleDelete(cliente)} className="text-2xl text-red-600" />
+                                            </button>
+                                        )
+                                    }
                                 </td>
                             </tr>
                         ))}

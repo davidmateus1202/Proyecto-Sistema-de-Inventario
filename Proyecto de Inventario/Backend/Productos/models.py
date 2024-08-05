@@ -5,7 +5,7 @@ from Category.models import Category
 class Producto(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     categoria = models.ForeignKey(Category, on_delete=models.CASCADE)
-    codigo = models.CharField(unique=True,max_length=1000)
+    codigo = models.CharField(max_length=1000)
     nombre = models.CharField(max_length=1000)
     unidades = models.IntegerField()
     precio_compra = models.FloatField()

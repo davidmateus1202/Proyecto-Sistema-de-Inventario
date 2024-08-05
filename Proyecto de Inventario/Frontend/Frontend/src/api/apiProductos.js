@@ -38,8 +38,8 @@ export const createProducto = async (data, category, image) => {
         })
 
         if(response.status === 200 || response.status === 201){
-            toast.success('Producto creado correctamente')
-            console.log(response)
+            return response.status
+            
         }else {
             toast.error('Error al crear el producto')
             console.log(response)
@@ -47,6 +47,7 @@ export const createProducto = async (data, category, image) => {
 
     } catch(error){
         console.log(error.response.data)
+        toast.error('Error al crear el producto')
     }
 }
 
@@ -67,6 +68,7 @@ export const updateProducto = async (data, producto,) => {
         })
 
         if(response.status === 200 || response.status === 201){
+            window.location.reload();
             toast.success('Producto actualizado correctamente')
             console.log(response)
         }else{

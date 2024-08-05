@@ -55,7 +55,7 @@ export default function Clientes() {
                   })}
                 />
                 {errors.nombre && <span className="text-red-500 text-xs">{errors.nombre.message}</span>}
-                <div className={`flex ${isDestock ? 'flex-row' : 'flex-col'} gap-3`}>
+                < div className={`flex ${isDestock ? 'flex-row' : 'flex-col'} gap-3`}>
                   <div className="h-auto relative flex-col items-center w-full">
                     <button
                       className="w-full border border-white p-2 rounded-md shadow-md bg-primary text-white hover:bg-blue-600"
@@ -117,7 +117,7 @@ export default function Clientes() {
 
             </div>
           <div className="flex flex-col w-full h-screen overflow-y-auto">
-               <TableCliente setSelectCliente={setClientes} setOpen={setOpen} />
+               <TableCliente setSelectCliente={setClientes} setOpen={setOpen} method='deleted'/>
           </div>
 
           {Open && <ModalClientes setOpen={setOpen} clientes={clientes}/>}
