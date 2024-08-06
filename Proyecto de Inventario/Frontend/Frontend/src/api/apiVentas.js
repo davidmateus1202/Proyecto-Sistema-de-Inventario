@@ -27,3 +27,21 @@ export const ventasDetalle = async (venta, producto) => {
         toast.error('Error al realizar la venta');
     }
 }
+
+export const facuras = async (venta) => {
+
+    try{
+        const response = await apiServices.get(`venta/create_factura_pdf/${venta}/`, {
+            responseType: 'blob'
+        });
+        const blob = new Blob([response.data], {type: 'application/pdf'});
+        const url = window.URL.createObjectURL(blob);
+        window.open(url);
+
+
+    }catch(e){
+        console.log(e)
+    }
+
+
+}

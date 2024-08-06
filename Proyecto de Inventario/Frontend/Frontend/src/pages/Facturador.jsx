@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import ModalTable from "../components/ModalTable";
 import ProductosComponent from "../components/ProductosComponent";
 import toast from "react-hot-toast";
-import { ventas, ventasDetalle } from "../api/apiVentas";
+import { ventas, ventasDetalle, facuras } from "../api/apiVentas";
 
 function Facturador() {
   const [isDesktop, setIsDesktop] = useState(window.innerWidth > 1024);
@@ -86,6 +86,7 @@ function Facturador() {
       console.log("Venta creada con id:", VentasId);
 
       await ventasDetalle(VentasId, productosFactura);
+      await facuras(VentasId);
       setProductosFactura([]);
       setTotalFactura(0);
       
