@@ -87,6 +87,7 @@ function Facturador() {
 
       await ventasDetalle(VentasId, productosFactura);
       await facuras(VentasId);
+      window.location.reload();
       setProductosFactura([]);
       setTotalFactura(0);
       

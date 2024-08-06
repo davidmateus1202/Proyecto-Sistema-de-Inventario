@@ -76,19 +76,22 @@ def create_factura_pdf(request, venta_id):
         page = pdf_document[0]
 
         # Añadir datos dinámicos al PDF
-        page.insert_text((72, 72), f"Número de factura: {venta.id}", fontsize=12)
-        page.insert_text((72, 200), f"{venta.fecha}", fontsize=12)
-        page.insert_text((72, 112), f"Cliente: {venta.cliente.nombre}", fontsize=12)
-        page.insert_text((72, 132), f"Total: {venta.total}", fontsize=12)
+        page.insert_text((456, 668), f"{venta.id}", fontsize=12)
+        page.insert_text((100, 298), f"{venta.fecha}", fontsize=12)
+        page.insert_text((105, 197), f"{venta.cliente.nombre}", fontsize=10)
+        page.insert_text((125, 210), f"{venta.cliente.identificacion}", fontsize=10)
+        page.insert_text((95, 223), f"{venta.cliente.email}", fontsize=10)
+        page.insert_text((107, 235), f"{venta.cliente.telefono}", fontsize=10)
+        page.insert_text((443, 532), f"{venta.total}", fontsize=12)
 
         # Añadir los detalles de la venta
-        y_position = 172  # Posición Y inicial para los detalles
+        y_position = 350  # Posición Y inicial para los detalles
         for detalle in detalles_venta:
-            page.insert_text((72, y_position), f"Producto: {detalle.producto.nombre}", fontsize=12)
-            page.insert_text((200, y_position), f"Cantidad: {detalle.cantidad}", fontsize=12)
-            page.insert_text((300, y_position), f"Precio: {detalle.precio}", fontsize=12)
-            page.insert_text((400, y_position), f"Total: {detalle.precio * detalle.cantidad}", fontsize=12)
-            y_position += 20
+            page.insert_text((72, y_position), f"{detalle.producto.nombre}", fontsize=11)
+            page.insert_text((315, y_position), f"{detalle.cantidad}", fontsize=11)
+            page.insert_text((390, y_position), f"{detalle.precio}", fontsize=11)
+            page.insert_text((480, y_position), f"{detalle.precio * detalle.cantidad}", fontsize=11 , color=(1, 0, 0))
+            y_position += 30
 
         # Guardar el archivo PDF modificado en memoria
         pdf_stream = io.BytesIO()
