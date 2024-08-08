@@ -126,9 +126,10 @@ function Productos() {
                 <motion.div
                   variants={itemVariants}
                   key={index}
-                  className="block rounded-md p-4 shadow-md bg-white"
+                  className="flex flex-col rounded-md p-4 shadow-md bg-white items-center"
                 >
-                  <img src={producto.image} className="w-full h-72 object-cover rounded-md mb-7" alt={producto.nombre} />
+                  <img src={producto.image} className="h-[300px] w-[230px] rounded-md mb-7" alt={producto.nombre} />
+                  <div className="w-full h-auto ">
                   <span className="text-gray-400">{formatCurrency(producto.precio)}</span>
                   <h3 className="font-semibold text-slate-500">{producto.nombre}</h3>
                   {
@@ -150,6 +151,8 @@ function Productos() {
                   >
                     Actualizar
                   </button>
+
+                  </div>
                 </motion.div>
               ))}
             </div>
