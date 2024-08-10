@@ -136,20 +136,18 @@ export function CategoryPage() {
             />
 
           </div>
-          <div className= 'overflow-y-auto max-h-96 px-2'>
-            {
-              categories.length === 0 ? <div className="h-screen">
-                <Notfound />
+
+          {
+            categories.length === 0 ? <Notfound /> : isDesktop ? (
+              <div className="overflow-y-auto max-h-96 px-2">
+                {renderTable()}
               </div>
-                :
-                (
-
-                  isDesktop ? renderTable() : renderPhone()
-
-                )
-
-            }
-          </div>
+            ): (
+              <div className="overflow-y-auto max-h-96 px-2">
+                {renderPhone()}
+              </div>
+            )
+          }
         </div>
         {open && <ModalForm setOpen={setOpen} setCategories={setCategories} method={method} category={selectedCategory} />}
       </div>
